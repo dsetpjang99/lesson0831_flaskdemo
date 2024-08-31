@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM2.5資訊</title>
+
+    <style>
+        body {
+            font-family: "標楷體";
+            background-color: powderblue;
+            text-align: center;
+        }
+
+        table {
+            width: 40%;
+            background-color: wheat;
+            text-align: center;
+            margin: 0 auto;
+
+        }
+
+        thead {
+            font-family: "TimesRoman";
+            font-size: 20px;
+            background-color: brown;
+            color: white;
+        }
+
+        tbody {
+            font-size: 16px;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>全省PM2.5資訊</h1>
+    <h3 style="color:red;">目前時間：{{data["today"]}}</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                {% for th in data["columns"] %}
+                <th>{{th}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for tr in data["values"] %}
+            <tr>
+                {% for td in tr %}
+                <td>{{td}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    <!-- {{data["columns"]}} -->
+    <!-- {{data["values"]}} -->
+
+    <a href="/" style="color:fuchsia;margin: 6px auto;
+            padding: 6px;font-size: 24px;">回首頁</a>
+</body>
+
+</html>

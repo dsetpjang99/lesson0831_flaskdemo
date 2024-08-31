@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 from datetime import datetime
+from scrape import scrape_stocks
+from scrape import scrape_pm25
 
 app = Flask(__name__)  # __name__ => __main__
 
@@ -79,4 +81,30 @@ def getbmi(name, height, weight):
     return "<h2>輸入錯誤</h2>"
 
 
-app.run(debug=True)
+@app.route("/stocks")
+def get_stocks():
+    datas = scrape_stocks()
+
+    for data in datas:
+        print(data[0], data[1])
+
+    return render_template("stocks.html", stocks=datas)
+
+
+@app.route("/pm25")
+def get_pm25():
+    today = datetime.now()
+
+    columns, values = scrape_pm25()
+    # 使用字典來簡化return的參數寫法
+    data = {
+        "columns": columns,
+        "values": values,
+        "today": today.strftime("%Y/%m/%d %H:%M:%S"),
+    }
+
+    return render_template("pm25.html", data=data)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
